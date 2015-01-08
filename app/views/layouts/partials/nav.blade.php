@@ -10,9 +10,9 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button> -->
-        {{ link_to_route('home', 'Mashica Sport Data', $parameters = array(), $attributes = ['class' => 'navbar-brand']); }}
+        {{ link_to_route('home', 'Mashica Sport Data', $parameters = array(), $attributes = ['class' => 'navbar-brand']) }}
       </div>
-      <div id="navbar" class="navbar-collapse collapse">
+      <div id="navbar" class="navbar-collapse">
         <ul class="nav navbar-nav">
           <!-- <li class="active">{{ link_to_route('home', 'Home', $parameters = array(), $attributes = []); }}</li> -->
           <!-- <li><a href="#">About</a></li> -->

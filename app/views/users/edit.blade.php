@@ -8,7 +8,7 @@
 		<div class="col-md-12">
 
 			<div class="page-header">
-				<h1>New Athlete</h1>
+				<h1>Edit Athlete {{ $user->id }} <small>{{ $user->name . " " . $user->lastname }}</small></h1>
 			</div>
 
 		</div>
@@ -19,9 +19,9 @@
 			@include('layouts.partials.errors')
 
 		
-			{{ Form::open(['route' => 'users.store']) }}
+			{{ Form::model($user, ['method' => 'patch', 'route' => ['users.update', $user->id]]) }}
 
-
+			{{ Form::hidden('id',null) }}
 
 			<div class="form-group">
 				{{ Form::label('username', 'Username:') }}
@@ -31,16 +31,6 @@
 			<div class="form-group">
 				{{ Form::label('email', 'Email:') }}
 				{{ Form::text('email', null, ['class' => 'form-control']) }}
-			</div>
-
-			<div class="form-group">
-				{{ Form::label('password', 'Password:') }}
-				{{ Form::password('password', ['class' => 'form-control']) }}
-			</div>
-
-			<div class="form-group">
-				{{ Form::label('password_confirmation', 'Password Confirmation:') }}
-				{{ Form::password('password_confirmation', ['class' => 'form-control']) }}
 			</div>
 
 			<div class="form-group">
@@ -64,7 +54,7 @@
 			</div>
 
 			<div class="form-group">
-				{{ Form::submit('Create Account', ['class' => 'btn btn-primary']) }}
+				{{ Form::submit('Update', ['class' => 'btn btn-primary']) }}
 			</div>
 
 			{{ Form::close() }}

@@ -88,6 +88,7 @@ class UsersController extends \BaseController {
 		$user = $this->user->whereUsername($username)->first(); 
 
 		return View::make('users.show',['user' => $user]); 
+		//return $user;
 
 	}
 
@@ -98,9 +99,11 @@ class UsersController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function edit($id)
+	public function edit($username)
 	{
-		//
+		$user = $this->user->whereUsername($username)->first(); 
+
+		return View::make('users.edit',['user' => $user]);
 	}
 
 
@@ -112,7 +115,25 @@ class UsersController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		//
+		//$input = Input::all();
+
+		// if(! $this->user->isValid($input))
+		// {	
+		//  	return Redirect::back()->withInput()->withErrors($this->user->errors);
+		// }
+
+		$user = User::find($id); 
+
+		$user->username = Input::get('username');
+		$user->email =  Input::get('email');
+		$user->name =  Input::get('name');
+		$user->lastname =  Input::get('lastname');
+		$user->isactive =  Input::get('isactive');
+		$user->isinvisible =  Input::get('isinvisible');
+
+		$user->save();
+
+		return View::make('users.show',['user' => $user]); 
 	}
 
 
