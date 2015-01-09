@@ -51,6 +51,7 @@ class UsersController extends \BaseController {
 	 */
 	public function store()
 	{
+		// Get input
 		$input = Input::all();
 
 		if(! $this->user->isValid($input))
@@ -58,10 +59,6 @@ class UsersController extends \BaseController {
 		 	return Redirect::back()->withInput()->withErrors($this->user->errors);
 		}
 
-		// $user = new User;
-		// $user->login = Input::get('login');
-		// $user->password = Hash::make(Input::get('password'));
-		// $user->save();
 
 		// Fill the user 
 		$this->user->fill($input);
@@ -115,21 +112,25 @@ class UsersController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		//$input = Input::all();
+		// Get the input
+		$input = Input::all();
 
-		// if(! $this->user->isValid($input))
-		// {	
-		//  	return Redirect::back()->withInput()->withErrors($this->user->errors);
-		// }
+		// Validate
+		if(! $this->user->isValid($input, $id))
+		{	
+		 	return Redirect::back()->withInput()->withErrors($this->user->errors);
+		}
 
+
+		// Update
 		$user = User::find($id); 
 
-		$user->username = Input::get('username');
-		$user->email =  Input::get('email');
-		$user->name =  Input::get('name');
-		$user->lastname =  Input::get('lastname');
-		$user->isactive =  Input::get('isactive');
-		$user->isinvisible =  Input::get('isinvisible');
+		$user->username = $input['username'];
+		$user->email = $input['email'];
+		$user->name = $input['name'];
+		$user->lastname = $input['lastname'];
+		$user->isactive = Input::get('isactive');
+		$user->isinvisible = Input::get('isinvisible');
 
 		$user->save();
 
@@ -145,7 +146,10 @@ class UsersController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		//
+		User::destroy($id);
+
+		return Redirect::route('users.index');
+
 	}
 
 

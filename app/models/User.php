@@ -19,16 +19,23 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 
 	/**
-	 * Validation rules
-	 * @var Array
+	 * Validation Function
+	 *
+	 * 
 	 */
-	public static $rules = [
-		'username' => 'required|alpha_dash|unique:users',
-		'password' => 'required|confirmed',
-		'email' => 'required|email|unique:users',
-		'name' => 'required',
-		'lastname' => 'required'
-	];
+	public static function rules ($id=0, $merge=[])
+	{
+	    return array_merge(
+	        [
+				'username' => 'required|alpha_dash|unique:users,username' . ($id ? ",$id" : ''),
+				'password' => 'sometimes|required|confirmed',
+				'email' => 'required|email|unique:users' . ($id ? ",email,$id" : ''),
+				'name' => 'required',
+				'lastname' => 'required'
+	        ], 
+			$merge
+		);
+	}
 	
 
 	/**
@@ -59,11 +66,13 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	/**
 	 * Validation for new user creation
 	 * @param  Input Array  $data Form data
+	 * @param  id of the user in case of update
 	 * @return boolean       passes or fails
 	 */
-	public function isValid($data)
+	public function isValid($data, $id=0)
 	{
-		$validation = Validator::make($data, static::$rules);
+		// $validation = Validator::make($data, static::$rules);
+		$validation = Validator::make($data, $this->rules($id));
 
 		if($validation->passes()) return true;
 

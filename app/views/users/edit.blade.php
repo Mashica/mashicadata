@@ -59,6 +59,13 @@
 
 			{{ Form::close() }}
 			
+
+			{{ Form::model($user, ['method' => 'delete', 'route' => ['users.destroy', $user->id]]) }}
+				{{ Form::submit('Delete', ['class' => 'btn btn-danger']) }}
+			{{ Form::close() }}
+
+
+
 		</div>
 	</div>
 
