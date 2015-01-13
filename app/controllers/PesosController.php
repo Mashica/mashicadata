@@ -97,10 +97,10 @@ class PesosController extends \BaseController {
 		$input = Input::all();
 
 		// Validate
-		// if(! $this->peso->isValid($input, $id))
-		// {	
-		//  	return Redirect::back()->withInput()->withErrors($this->peso->errors);
-		// }
+		if(! $this->peso->isValid($input, $id))
+		{	
+		 	return Redirect::back()->withInput()->withErrors($this->peso->errors);
+		}
 
 
 		// Update

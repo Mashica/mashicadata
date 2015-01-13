@@ -9,19 +9,26 @@ class Peso extends \Eloquent {
 
 
 
-
 	/**
-	 * Validation rules
-	 * @var Array
+	 * Validation Function
+	 *
+	 * 
 	 */
-	public static $rules = [
-		'user_id' => 'required',
-		'fecha' => 'required|date',
-		'peso' => 'required|numeric',
-		'grasa' => 'numeric',
-		'musculo' => 'numeric'
-	];
-	
+	public static function rules ($id=0, $merge=[])
+	{
+	    return array_merge(
+	        [
+				'user_id' => 'required',
+				'fecha' => 'required|date',
+				'peso' => 'required|numeric',
+				'grasa' => 'numeric',
+				'musculo' => 'numeric'
+	        ], 
+			$merge
+		);
+	}
+
+
 	/**
 	 * The database table used by the model.
 	 *
@@ -45,15 +52,17 @@ class Peso extends \Eloquent {
 	 * @param  Input Array  $data Form data
 	 * @return boolean       passes or fails
 	 */
-	public function isValid($data)
+	public function isValid($data, $id=0)
 	{
-		$validation = Validator::make($data, static::$rules);
+		$validation = Validator::make($data, $this->rules($id));
 
 		if($validation->passes()) return true;
 
 		$this->errors = $validation->messages(); 
 
 		return false;
+
+
 	}
 
 
