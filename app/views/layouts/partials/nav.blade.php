@@ -47,7 +47,7 @@
             <ul class="dropdown-menu" role="menu">
           <!-- list athletes -->    
               <li class="dropdown-header">Salud</li>
-              <li><a href="#">Peso</a></li>
+              <li>{{ link_to_route('peso.index', 'Peso', $parameters = array(), $attributes = array()) }}</li>
               <li class="divider"></li>
               <li class="dropdown-header">Pruebas</li>
               <li><a href="#">MAF</a></li>

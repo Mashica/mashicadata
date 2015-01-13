@@ -82,7 +82,7 @@ class UsersController extends \BaseController {
 	 */
 	public function show($username)
 	{
-		$user = $this->user->whereUsername($username)->first(); 
+		$user = $this->user->whereUsername($username)->first();
 
 		return View::make('users.show',['user' => $user]); 
 		//return $user;
@@ -149,7 +149,6 @@ class UsersController extends \BaseController {
 		User::destroy($id);
 
 		return Redirect::route('users.index');
-
 	}
 
 
