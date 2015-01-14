@@ -62,7 +62,7 @@
         {{ $errors->first('password','<span class="error alert-danger">:message</span>') }}
 
 				{{ Form::submit('Escuchar', ['class' => 'btn btn-lg btn-primary btn-block']) }}
-
+<p style="text-align:left; color:grey;">Se me olvidó mi {{ link_to('password/remind', 'contraseña') }}</p>
 
         @if (Session::has('flash_message'))
           <div class="form-control alert alert-danger">
@@ -72,7 +72,6 @@
 
 				{{ Form::close() }}
 			</p>
-
 
 
           </div>
