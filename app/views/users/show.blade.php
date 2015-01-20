@@ -16,7 +16,7 @@
 
 		<p><strong>Username:</strong> {{ $user->username }}</p>
 
-		<p><strong>Password:</strong> ***** {{ link_to('#', 'Cambiar Password', ['class' => 'btn btn-default btn-xs']) }}</p>
+		<p><strong>Password:</strong> ***** {{ link_to_route('users.password.edit', 'Cambiar Password', $parameters = array($user->username),  ['class' => 'btn btn-default btn-xs']) }}</p>
 
 		<p><strong>Email:</strong> {{ $user->email }}</p>
 

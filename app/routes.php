@@ -15,9 +15,13 @@ Route::resource('sessions','SessionsController', ['only' => ['store','destroy']]
 Route::controller('password', 'RemindersController');
 
 
+
+# User Password Update (These routes must go before the Users route resource.)
+Route::get('users/{users}/password', ['as' => 'users.password.edit', 'uses' => 'UsersController@passwordEdit']);
+Route::post('users/{users}/password', ['as' => 'users.password.update', 'uses' => 'UsersController@passwordUpdate']);
+
 # Users
 Route::resource('users', 'UsersController');
 
 # Pesos
 Route::resource('peso', 'PesosController', ['except' => 'create']);
-

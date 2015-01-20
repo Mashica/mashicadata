@@ -152,4 +152,73 @@ class UsersController extends \BaseController {
 	}
 
 
+
+
+
+
+	/**
+	 * Show the form for editing the specified resource.
+	 *
+	 * @param  string  $username
+	 * @return Response
+	 */
+	public function PasswordEdit($username)
+	{
+		$user = $this->user->whereUsername($username)->first(); 
+
+		return View::make('users.password.edit',['user' => $user]);
+	}
+
+
+	/**
+	 * Update the specified resource in storage.
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function passwordUpdate($id)
+	{
+		// Get the input
+		$input = Input::all();
+
+		// Get the User
+		$user = User::find($id); 
+
+		$validator = Validator::make($input,
+			array(
+				'current_password'		=> 'required',
+				'password'				=> 'required|confirmed'
+			)
+		);
+
+		if($validator->fails()) 
+		{
+
+			return Redirect::back()->withErrors($validator);
+
+		}
+		elseif(Hash::check(Input::get('current_password'), $user->password))
+		{
+
+			// Get passwords from the user's input
+			//$password = Input::get('password');
+			$user->password = $input['password'];
+			$user->save();
+
+			return Redirect::route('users.show', ['username' => $user->username]);
+
+		}
+		else
+		{
+			return Redirect::back()->withErrors($messages = array(
+			    'passwordupdate' => 'The current password is incorrect.'
+				));
+
+		}
+
+	}
+
+
+
+
 }
