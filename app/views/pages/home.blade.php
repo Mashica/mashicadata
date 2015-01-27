@@ -64,7 +64,7 @@
 			<div class="col-md-4">
 				<h4>{{ $user->full_name }}</h4>
 				<!-- <p>{{ link_to("mailto:$user->email", $user->email) }}</p> -->
-				<p>{{ link_to("/users/{$user->username}", $user->username, ['role' => 'button', 'class' => 'btn btn-default']) }}</p>
+				<p>{{ link_to("/{$user->username}", $user->username, ['role' => 'button', 'class' => 'btn btn-default']) }}</p>
 
 			</div>
 

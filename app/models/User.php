@@ -10,8 +10,6 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	use UserTrait, RemindableTrait;
 
 
-	//public $timestamps = false;
-
 	protected $fillable = ['username','email','password','name','lastname','isactive','isinvisible'];
 
 	public $errors;
@@ -82,6 +80,16 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	}
 
 
+	/**
+	 * Check if current user is the authenticated user
+	 * 
+	 * 
+	 */
+	public function isCurrentUser()
+	{
+		return Auth::user()->id == $this->id;
+	}
+
 
 	/**
 	 * RELATIONSHIPS
@@ -96,7 +104,10 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		return $this->hasMany('Peso');
 	}
 
-
+	public function profile()
+	{
+		return $this->hasOne('Profile');
+	}
 
 }
 

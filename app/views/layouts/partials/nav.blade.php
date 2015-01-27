@@ -31,7 +31,9 @@
                 
 
                 @foreach ($users as $user)
-                  <li>{{ link_to("/users/{$user->username}", $user->name . " " . $user->lastname) }}</li>
+                  <li>{{ 
+                    link_to("/{$user->username}", $user->name . " " . $user->lastname) 
+                  }}</li>
                 @endforeach
 
               @else
@@ -68,7 +70,7 @@
             </ul>
           </li>
         </ul>
-        <p class="navbar-text navbar-right"><a href="/logout" class="navbar-link">Cerrar sesión</a> | <a href="/users/{{ Auth::user()->username }}" class="navbar-link">{{ Auth::user()->name . " " . Auth::user()->lastname }}</a></p>
+        <p class="navbar-text navbar-right"><a href="/logout" class="navbar-link">Cerrar sesión</a> | <a href="/{{ Auth::user()->username }}" class="navbar-link">{{ Auth::user()->name . " " . Auth::user()->lastname }}</a></p>
         
         <!-- <ul class="nav navbar-nav navbar-right">
           <li class="active"><a href="./">Default <span class="sr-only">(current)</span></a></li>

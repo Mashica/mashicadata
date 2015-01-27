@@ -9,7 +9,7 @@
 		<h1>All Mashica Athletes</h1>	
 		
 		@foreach ($users as $user)
-			<li>{{ link_to("/users/{$user->username}", $user->name . " " . $user->lastname) }}</li>
+			<li>{{ link_to("/{$user->username}", $user->name . " " . $user->lastname) }}</li>
 		@endforeach
 
 	@else
