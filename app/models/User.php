@@ -92,11 +92,54 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 
 	/**
-	 * RELATIONSHIPS
+	 * Determine whether a user has role or not; by role name, or by role id.
+	 * @param $name string of role name
+	 * or
+	 * @param $id int index value of role id.
+	 * @return boolean has or has not.
+	 * 
 	 */
+	public function hasRole($name)
+	{
+		foreach ($this->roles as $role) {
+			if ($role->name == $name) return true;
+		}
+		return false;
+	}
+	public function hasRoleId($id)
+	{
+		foreach ($this->roles as $role) {
+			if ($role->id == $id) return true;
+		}
+		return false;
+	}
 
 	/**
+	 * Assigns role to user.
+	 * @param int Role Id
+	 * 
+	 */
+	public function assignRole($roleId)
+	{
+		if(! $this->hasRoleId($roleId)) return $this->roles()->attach($roleId);
+		else return true;
+	}
+	public function removeRole($roleId)
+	{
+		return $this->roles()->detach($roleId);
+	}
+
+
+
+
+
+
+	/**
+	 * RELATIONSHIPS
+	 * 
 	 * One to many relationship for pesos
+	 * One to one relationship for profile
+	 * Many to many relationship for roles
 	 * 
 	 */
 	public function pesos()
@@ -108,6 +151,12 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	{
 		return $this->hasOne('Profile');
 	}
+
+	public function roles()
+	{
+		return $this->belongsToMany('Role');
+	}
+
 
 }
 
