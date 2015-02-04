@@ -16,18 +16,23 @@ Route::controller('password', 'RemindersController');
 
 
 
-// Route::get('test', function(){
-// 	// $role = Role::whereName('admin')->first();
-// 	// User::find(1)->assignRole($role->id);
-// 	// User::find(1)->removeRole(Role::whereName('admin')->first()->id);
+Route::get('test', function(){
+	// $role = Role::whereName('admin')->first();
+	// User::find(1)->assignRole($role->id);
+	// User::find(1)->removeRole(Role::whereName('admin')->first()->id);
 
-// 	$user = User::with('roles')->with('profile')->find(2);
-// 	//return User::with('roles')->with('profile')->find(1)->roles->first()->name;
-// 	// if($user->hasRole('super') || $user->hasRole('admin')) return "Administrator";
-// 	// else return "Member";
-// 	return $user;
+	//$user = User::with('roles')->with('profile')->find(2);
+	$users = User::with('roles')->get();
 
-// });
+	foreach ($users as $user) {
+		$user->assignRole(3);
+	}
+	//return User::with('roles')->with('profile')->find(1)->roles->first()->name;
+	// if($user->hasRole('super') || $user->hasRole('admin')) return "Administrator";
+	// else return "Member";
+	return $users;
+
+});
 
 
 

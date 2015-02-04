@@ -20,21 +20,26 @@
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Atletas <span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
+
+        @if(Auth::user()->canCreateUser())
               <li>{{ link_to_route('users.create', 'Nueva Cuenta de Atleta', $parameters = array(), $attributes = []); }}</li>
               <li class="divider"></li>
-
+        @endif
               @if ($users->count())
 
-                <li><a href="/users">Todos</a></li>
-                <li class="divider"></li>
+        
+
                 <li class="dropdown-header">Atletas Activos</li>
-                
 
                 @foreach ($users as $user)
                   <li>{{ 
                     link_to("/{$user->username}", $user->name . " " . $user->lastname) 
                   }}</li>
                 @endforeach
+
+                <li class="divider"></li>
+                <li><a href="/users">Todos</a></li>
+
 
               @else
 
@@ -44,6 +49,9 @@
 
             </ul>
           </li>
+
+        @if(Auth::user()->canCreateUser())
+
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Captura <span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
@@ -69,6 +77,11 @@
  -->          <!-- En Prueba list -->
             </ul>
           </li>
+
+        @endif
+
+
+
         </ul>
         <p class="navbar-text navbar-right"><a href="/logout" class="navbar-link">Cerrar sesión</a> | <a href="/{{ Auth::user()->username }}" class="navbar-link">{{ Auth::user()->name . " " . Auth::user()->lastname }}</a></p>
         

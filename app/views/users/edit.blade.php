@@ -99,17 +99,48 @@
 
 
 
-
+		@if($user->canCreateUser())
 			<div class="form-group">
+				<input type="hidden" name="isactive" id="isactive" value="0">
 				{{ Form::label('isactive', 'Currently Active: ') }}
 				{{ Form::checkbox('isactive','1',true) }}
 			</div>
 
 		
 			<div class="form-group">
+				<input type="hidden" name="isinvisible" id="isinvisible" value="0">
 				{{ Form::label('isinvisible', 'Hidden: ') }}
 				{{ Form::checkbox('isinvisible','1',false) }}
 			</div>
+		@else
+			<div class="form-group">
+			{{ Form::hidden('isactive',$user->isactive) }}
+			{{ Form::hidden('isinvisible',$user->isinvisible) }}
+			</div>
+		@endif
+
+
+
+		@if(Auth::user()->hasRole('super') || Auth::user()->id == 1)
+
+			<div class="form-group">
+			
+			{{ Form::label('role[]', 'Roles:') }}
+
+			@foreach (Role::get() as $role) 
+				
+				<br>{{ Form::checkbox('role[]', $role->id, in_array($role->id, $userRoles)) }} {{{ $role->name }}}
+
+			@endforeach	
+			
+			</div>
+
+		@endif
+
+
+
+
+		<hr>
 
 			<div class="form-group">
 				{{ Form::submit('Update', ['class' => 'btn btn-primary']) }}
@@ -117,7 +148,9 @@
 
 			{{ Form::close() }}
 			
-		@if(1 == 0)
+
+			
+		@if($user->canCreateUser())
 			{{ Form::model($user, ['method' => 'delete', 'route' => ['users.destroy', $user->id]]) }}
 				{{ Form::submit('Delete', ['class' => 'btn btn-danger']) }}
 			{{ Form::close() }}
