@@ -31,7 +31,6 @@ Route::get('test', function(){
 	// // if($user->hasRole('super') || $user->hasRole('admin')) return "Administrator";
 	// // else return "Member";
 	// return $users;
-
 });
 
 
