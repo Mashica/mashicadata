@@ -7,7 +7,7 @@
 	
 	<h1>{{{ $user->name . " " . $user->lastname }}}</h1>
 	
-		@if($user->isCurrentUser())
+		@if($user->canEditUser())
 
 			<p>{{ link_to_route('users.edit', 'edit', $parameters = array($user->username), $attributes = ['class' => 'btn btn-link btn-xs'])}}</p>
 
@@ -35,6 +35,22 @@
 		@else
 			<p class="text-danger">Not Active</p>
 		@endif
+
+
+
+		@if($user->roles->count() > 0)
+
+			<p><strong>Roles:</strong><br>
+
+				@foreach ($user->roles as $role) 
+
+					{{ $role->name}}<br>
+
+				@endforeach	
+			</p>
+
+		@endif
+
 
 
 @if($user->profile)
@@ -79,7 +95,13 @@
 		<div class="table-responsive">
 		<table class="table table-hover table-condensed">
 
-			<caption>Peso / Grasa / Músculo</caption>
+			<caption>Peso / Grasa / Músculo
+				
+				@if($user->canCreateUser())
+				{{ link_to_route('peso.show', 'add', $parameters = array($user->username), $attributes = ['class' => 'btn btn-link btn-xs'])}}
+				@endif
+			</caption>
+
 
 			<thead>
 				<tr>
@@ -89,6 +111,8 @@
 					<th>músculo</th>
 					<th></th>
 				</tr>
+
+
 			</thead>
 			<tbody>
 			@foreach ($user->pesos()->orderBy('fecha','desc')->get() as $pesoDia)
@@ -98,7 +122,7 @@
 					<td>{{ $pesoDia->grasa }} %</td>
 					<td>{{ $pesoDia->musculo }} kg</td>
 					<td>
-						@if($user->isCurrentUser())
+						@if($user->canCreateUser())
 						{{ link_to_route('peso.edit', 'edit', $parameters = array($pesoDia->id), $attributes = ['class' => 'btn btn-link btn-xs']) }}
 						@endif
 					</td>

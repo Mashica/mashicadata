@@ -14,7 +14,8 @@ class UsersController extends \BaseController {
 
 		// Filter all access to users
 		$this->beforeFilter('auth');
-		$this->beforeFilter('currentUser', ['only' => ['edit', 'update']]); 
+		$this->beforeFilter('canEditUser', ['only' => ['edit', 'update']]); 
+		$this->beforeFilter('canCreateUser', ['only' => ['create', 'store', 'destroy']]); 
 	}
 
 
@@ -69,7 +70,11 @@ class UsersController extends \BaseController {
 		// Save it and return to the Index
 		$this->user->save();
 
-		return Redirect::route('users.index');
+		// Assign "member role to new user."
+		$this->user->assignRole(3);
+
+		// Redirect to personal page of the user.
+		return Redirect::route('users.show',['username' => $this->user->username]);
 
 	}
 
@@ -88,7 +93,6 @@ class UsersController extends \BaseController {
 		try
 		{
 			$user = $this->user->with('profile')->whereUsername($username)->firstOrFail();
-			//dd($user->toArray());
 		}
 		catch(ModelNotFoundException $e)
 		{
@@ -109,14 +113,14 @@ class UsersController extends \BaseController {
 	{
 		try
 		{
-			$user = $this->user->with('profile')->whereUsername($username)->firstOrFail();
-
+			$user = $this->user->with('profile')->with('roles')->whereUsername($username)->firstOrFail();
+			$userRoles = $user->roles->lists('id');
 		}
 		catch(ModelNotFoundException $e)
 		{
 			return Redirect::home();
 		}
-		return View::make('users.edit',['user' => $user]);
+		return View::make('users.edit',['user' => $user, 'userRoles' => $userRoles]);
 	}
 
 
@@ -143,9 +147,30 @@ class UsersController extends \BaseController {
 
 		// Update User table
 		$user->fill($input);
-		$user->isactive = Input::get('isactive');
-		$user->isinvisible = Input::get('isinvisible');
 		$user->save();
+
+
+		// Update Roles
+		if(Auth::user()->hasRole('super') || Auth::user()->id == 1)
+		{
+			if(isset($input['role'])) 
+				$allowed = $input['role'];
+			else $allowed = array();
+				
+			if(!$allowed || !is_array($allowed))
+				$allowed = array();
+
+			if(count($allowed) > 0)
+				$allowed = Role::select('id')
+					->whereIn('id', $allowed)
+					->get()
+					->lists('id');
+
+			if(count($allowed) > 0)
+				$user->roles()->sync($allowed);
+			else $user->roles()->detach();
+		}
+
 
 		// Get profile id
 		$profile_id = $user->profile ? $user->profile->id : null; 

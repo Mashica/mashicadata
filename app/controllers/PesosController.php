@@ -1,5 +1,8 @@
 <?php
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+
+
 class PesosController extends \BaseController {
 
 
@@ -7,8 +10,9 @@ class PesosController extends \BaseController {
 	{
 		$this->peso = $peso;
 
-		// Filter all access to users
+		// Filter all access to pesos
 		$this->beforeFilter('auth');
+		$this->beforeFilter('canCreateUser'); 
 	}
 
 
@@ -60,12 +64,26 @@ class PesosController extends \BaseController {
 	/**
 	 * Display the specified resource.
 	 *
-	 * @param  int  $id
+	 * @param  int  $username
 	 * @return Response
 	 */
-	public function show($id)
-	{
-		//
+	public function show($username)
+	{	
+		try
+		{
+			// $user = $this->user->with('profile')->whereUsername($username)->firstOrFail();
+			$user = User::whereUsername($username)->firstOrFail();
+
+		}
+		catch(ModelNotFoundException $e)
+		{
+			return Redirect::home();
+		}
+
+		$users = User::select('id', DB::raw('CONCAT(name, " ", lastname) AS full_name'))->where('isActive',1)->orderBy('full_name')->lists('full_name', 'id');
+		$userId = ($user) ? $user->id : null;
+		
+		return View::make('peso.create', array('users' => $users, 'user' => $user, 'userId' => $userId));
 	}
 
 

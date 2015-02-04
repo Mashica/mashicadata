@@ -131,6 +131,28 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 
 
+	/**
+	 * Can edit/create users
+	 * 
+	 */
+	public function canEditUser()
+	{
+		if($this->isCurrentUser() || Auth::user()->hasRole('super') || Auth::user()->hasRole('admin') || Auth::user()->id == 1)
+		{
+			return true;
+		}
+
+		return false;
+	}
+	public function canCreateUser()
+	{
+		if(Auth::user()->hasRole('super') || Auth::user()->hasRole('admin') || Auth::user()->id == 1)
+		{
+			return true;
+		}
+		
+		return false;
+	}
 
 
 

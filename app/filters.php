@@ -100,10 +100,42 @@ Route::filter('csrf', function()
 Route::filter('currentUser', function($route){
 
 	if(Auth::guest()) return Redirect::home(); 
-// dd();
+
 	if(Auth::user()->username !== $route->parameter('users'))
 	{
 		return Redirect::home();
 	}
 
 });
+
+
+Route::filter('canEditUser', function($route)
+{
+    if(Auth::guest()) return Redirect::home(); 
+
+    if(Auth::user()->username !== $route->parameter('users')  && (  ! (Auth::user()->hasRole('super') || Auth::user()->hasRole('admin'))  ) )
+	{
+		return Redirect::home();
+	}
+});
+
+Route::filter('canCreateUser', function($route)
+{
+    if(Auth::guest()) return Redirect::home(); 
+
+    if(! (Auth::user()->hasRole('super') || Auth::user()->hasRole('admin')) )
+	{
+		return Redirect::home();
+	}
+    	
+
+});
+
+
+
+
+
+
+
+
+

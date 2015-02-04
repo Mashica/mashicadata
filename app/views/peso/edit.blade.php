@@ -68,7 +68,10 @@
 		<div class="table-responsive">
 		<table class="table table-hover table-condensed">
 
-			<caption>Peso / Grasa / Músculo</caption>
+			<caption>Peso / Grasa / Músculo
+				
+				{{ link_to_route('peso.show', 'add', $parameters = array($user->username), $attributes = ['class' => 'btn btn-link btn-xs'])}}
+			</caption>
 
 			<thead>
 				<tr>
