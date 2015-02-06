@@ -24,7 +24,7 @@ class SessionsController extends \BaseController {
 	{
 		// Get form input
 		$input = Input::only('username','password');
-
+		
 		// Do validation
 		$validation = Validator::make($input, static::$rules);
 
@@ -35,12 +35,21 @@ class SessionsController extends \BaseController {
 		}
 
 
+		// Let user log in with either email or username. Set field to value used.
+		$usernameinput = $input['username'];
+		$field = filter_var($usernameinput, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+
+
+		// Log the user in and set the "remember" field to true.
+		if (Auth::attempt(array($field => $usernameinput, 'password' => $input['password'], 'isactive' => 1), true)) {
+		    return Redirect::intended('/');
+		}
 
 		// if we've arrive here, we passed the validation. So, log in.
-		if(Auth::attempt($input))
-		{
-			return Redirect::intended('/');
-		}
+		// if(Auth::attempt($input))
+		// {
+		// 	return Redirect::intended('/');
+		// }
 
 		// if login fails, then flash the failed login message
 		return Redirect::back()->withInput()->withFlashMessage('Nombre de usuario o contraseña equivocada.');
