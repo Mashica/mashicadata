@@ -33,7 +33,7 @@ class StravaController extends \BaseController {
 	{
 		$code = Input::only('code');
 
-		return View::make('strava.token',['code' => $code]);
+		return View::make('strava.token',['code' => $code['code']]);
 	
 
 	}
