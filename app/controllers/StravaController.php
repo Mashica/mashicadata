@@ -6,7 +6,7 @@ class StravaController extends \BaseController {
 	public function __construct() 
 	{
 		// Filter all access to users
-		$this->beforeFilter('auth');
+		//$this->beforeFilter('auth');
 	}
 
 
@@ -32,7 +32,6 @@ class StravaController extends \BaseController {
 	public function token()
 	{
 		$code = Input::only('code');
-
 
 		return View::make('strava.token',['code' => $code]);
 	
