@@ -34,16 +34,20 @@ Route::get('test', function(){
 });
 
 
+# Strava
+Route::get('strava', ['as' => 'strava.index', 'uses' => 'StravaController@index']);
+Route::get('strava/token_exchange', ['as' => 'strava.token', 'uses' => 'StravaController@token']);
+
+
 
 # Pesos
 Route::resource('peso', 'PesosController', ['except' => 'create']);
 
 # Users
 Route::resource('users', 'UsersController');
-# User direct (w/o "user")
-Route::get('/{users}', 'UsersController@show');
 # User Password Update 
 Route::get('/users/{users}/password', ['as' => 'users.password.edit', 'uses' => 'UsersController@passwordEdit']);
 Route::post('/users/{users}/password', ['as' => 'users.password.update', 'uses' => 'UsersController@passwordUpdate']);
-
+# User direct (w/o "user")
+Route::get('/{users}', 'UsersController@show');
 
