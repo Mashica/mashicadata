@@ -68,4 +68,21 @@ return array(
 
 	),
 
+
+	/**
+	 * OAuth2 Providers
+	 *
+	 *
+	 *
+	 * 
+	 */
+	'providers' => array(
+		'strava' => array(
+			'identifier'    => $_ENV['STRAVA_IDENTIFIER'],
+			'secret'        => $_ENV['STRAVA_SECRET'],
+			'callback_uri'  => $_ENV['STRAVA_CALLBACKURI']
+		)
+	),
+
+
 );

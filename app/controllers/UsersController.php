@@ -1,5 +1,8 @@
 <?php
 
+use OAuth2\OAuth2;
+use OAuth2\Token_Access;
+use OAuth2\Exception as OAuth2_Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 
@@ -17,6 +20,56 @@ class UsersController extends \BaseController {
 		$this->beforeFilter('canEditUser', ['only' => ['edit', 'update']]); 
 		$this->beforeFilter('canCreateUser', ['only' => ['create', 'store', 'destroy']]); 
 	}
+
+
+
+	public function get_user_info(Token_Access $token)
+	{
+		$url = 'https://www.strava.com/api/v3/athlete?' . http_build_query(array(
+			'access_token' => $token->access_token,
+		));
+
+		$user = json_decode(file_get_contents($url));
+		//$user = file_get_contents($url);
+
+		// return $user;
+
+		// Create a response from the request
+		return array(
+			'uid' => $user->id,
+			'firstname'=> $user->firstname,
+			'lastname'=> $user->lastname,
+			'profile_medium' => $user->profile_medium,
+			'profile' => $user->profile,
+			'sex' => $user->sex,
+			'follower_count' => $user->follower_count,
+			'friend_count' => $user->friend_count,
+			'created_at' => $user->created_at,
+			'updated_at' => $user->updated_at,
+		);
+	}
+
+	public function access_strava($token)
+	{
+
+        //$params = $provider->access($_GET['code']);
+		if ( ! isset($token))
+	    {
+	    	return Redirect::route('strava.index');
+	    }
+
+
+    	$token = new Token_Access(array(
+                'access_token' => $token
+             ));
+		$strava_user = $this->get_user_info($token);
+
+ 		return ($strava_user);
+	}
+
+
+
+
 
 
 
@@ -99,7 +152,10 @@ class UsersController extends \BaseController {
 			return Redirect::home();
 		}
 
-		return View::make('users.show',['user' => $user]); 
+
+		$strava_user = $user->profile ? $this->access_strava($user->profile->strava_oauth_token) : "";
+
+		return View::make('users.show',['user' => $user, 'strava_user' => $strava_user]);
 	}
 
 

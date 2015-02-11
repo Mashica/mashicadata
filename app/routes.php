@@ -36,7 +36,7 @@ Route::get('test', function(){
 
 # Strava
 Route::get('strava', ['as' => 'strava.index', 'uses' => 'StravaController@index']);
-Route::get('strava/token_exchange', ['as' => 'strava.token', 'uses' => 'StravaController@token']);
+//Route::get('strava/token_exchange', ['as' => 'strava.token', 'uses' => 'StravaController@token']);
 
 
 

@@ -10,7 +10,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	use UserTrait, RemindableTrait;
 
 
-	protected $fillable = ['username','email','password','name','lastname','isactive','isinvisible'];
+	protected $fillable = ['username','email','password','name','lastname','isactive','isinvisible','strava_oath_token','strava_oath_token_secret'];
 
 	public $errors;
 

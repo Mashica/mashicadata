@@ -5,7 +5,9 @@
 	"license": "MIT",
 	"type": "project",
 	"require": {
-		"laravel/framework": "4.2.*"
+		"laravel/framework": "4.2.*",
+		"madewithlove/laravel-oauth2": "0.4.*",
+		"doctrine/dbal": "2.3.5"
 	},
 	"require-dev": {
 		"way/generators": "~2.0",
