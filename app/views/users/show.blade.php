@@ -88,6 +88,7 @@
 	<div class="col-md-1"></div>
 	<div class="col-md-7">
 	
+		<div>	
 	@if($user->pesos->count() > 0)
 
 		<div class="table-responsive">
@@ -130,11 +131,79 @@
 		</table>
 		</div>
 	@endif
+		</div>
 
 
+
+		<div>	
+	@if($user->viguera->count() > 0)
+
+		<div class="table-responsive">
+		<table class="table table-hover table-condensed">
+
+			<caption>Subidas Viguera - Muro
+				
+				@if($user->canCreateUser())
+				{{ link_to_route('viguera.show', 'add', $parameters = array($user->username), $attributes = ['class' => 'btn btn-link btn-xs'])}}
+				@endif
+			</caption>
+
+
+			<thead>
+				<tr>
+					<th>Fecha</th>
+					<th>Ordinal</th>
+					<th>FC</th>
+					<th>Tiempo</th>
+					<th></th>
+				</tr>
+
+			</thead>
+			<tbody>
+			
+			<?php
+			$viguera_current_fecha = "";
+			$css_fondo = "";
+			?>
+
+			@foreach ($user->viguera()->orderBy('fecha','desc')->orderBy('ordinal','asc')->get() as $vigueraDia)
+				
+				@if($vigueraDia->fecha != $viguera_current_fecha) 
+					<?php 
+						$css_fondo = ($css_fondo == "active") ? "" : "active";
+						$viguera_current_fecha = $vigueraDia->fecha;
+					?>
+				@endif
+				<tr class="{{ $css_fondo }}">
+
+					<td>{{ date("F j, Y", strtotime($vigueraDia->fecha)) }}</td>
+					<td>{{ $vigueraDia->ordinal }}</td>
+					<td>{{ $vigueraDia->fc }}</td>
+					<td>{{ $vigueraDia->tiempo }}</td>
+					<td>
+						@if($user->canCreateUser())
+						{{ link_to_route('viguera.edit', 'edit', $parameters = array($vigueraDia->id), $attributes = ['class' => 'btn btn-link btn-xs'])}}
+						@endif
+					</td>
+				</tr>
+			
+			@endforeach
+
+			</tbody>
+		</table>
+		</div>
+	@endif
+		</div>
+
+
+
+		<div>
 	{{-- Begin Strava --}}
 
 	{{-- End Strava --}}
+		</div>
+
+
 
 	</div>
 

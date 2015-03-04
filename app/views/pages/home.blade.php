@@ -25,16 +25,16 @@
 	          <p>Peso, porcentaje de grasa, y masa de músculo.</p>
 	          <p><a class="btn btn-default" href="/peso" role="button">Añadir &plus;</a></p>
 	        </div>
+	        <div class="col-md-4">
+	          <h4>Viguera-Muro</h4>
+	          <p>Prueba de MAF (Maximum Aerobic Function). Subir a un paso aeróbico en el libramiento de San Felipe desde la primera pluma de Viguera.</p>
+	          <p><a class="btn btn-default" href="/viguera" role="button">Añadir &plus;</a></p>
+	        </div>
 <!-- 	        <div class="col-md-4">
 	          <h4>MAF</h4>
 	          <p>Maximum Aerobic Function. Prueba de Dr. Phil Maffeton para medir cambios en la capacidad aeróbica.</p>
 	          <p><a class="btn btn-default" href="#" role="button">Añadir &plus;</a></p>
 	       </div>
-	        <div class="col-md-4">
-	          <h4>Viguera-Muro</h4>
-	          <p>Variación de la prueba MAF. Subir a un paso aeróbico en el libramiento de San Felipe desde la primera pluma de Viguera.</p>
-	          <p><a class="btn btn-default" href="#" role="button">Añadir &plus;</a></p>
-	        </div>
 	        <div class="col-md-4">
 	          <h4>Subida El Estudiante</h4>
 	          <p>Máximo esfuerzo. Subir desde el monumento de Juárez hasta El Estudiante en menos tiempo posible.</p>

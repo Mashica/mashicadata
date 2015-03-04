@@ -60,21 +60,7 @@
               <li>{{ link_to_route('peso.index', 'Peso', $parameters = array(), $attributes = array()) }}</li>
               <li class="divider"></li>
               <li class="dropdown-header">Pruebas</li>
-              <li><a href="#">MAF</a></li>
-              <li><a href="#">Viguera-Muro</a></li>
-<!--               <li><a href="#">Action</a></li>
-              <li><a href="#">Another action</a></li>
-              <li><a href="#">Something else here</a></li>
-              <li class="divider"></li>
-              <li class="dropdown-header">Carreras</li>
-              <li><a href="#">Separated link</a></li>
-              <li><a href="#">One more separated link</a></li>
-              <li><a href="#">Action</a></li>
-              <li><a href="#">Another action</a></li>
-              <li><a href="#">Something else here</a></li>
-              <li><a href="#">Separated link</a></li>
-              <li><a href="#">One more separated link</a></li>
- -->          <!-- En Prueba list -->
+              <li>{{ link_to_route('viguera.index', 'Viguera-Muro', $parameters = array(), $attributes = array()) }}</li>
             </ul>
           </li>
 

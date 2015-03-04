@@ -145,7 +145,7 @@ class UsersController extends \BaseController {
 	{
 		try
 		{
-			$user = $this->user->with('profile')->whereUsername($username)->firstOrFail();
+			$user = $this->user->with('profile')->with('viguera')->whereUsername($username)->firstOrFail();
 		}
 		catch(ModelNotFoundException $e)
 		{

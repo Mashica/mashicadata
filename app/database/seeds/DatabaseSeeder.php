@@ -20,8 +20,11 @@ class DatabaseSeeder extends Seeder {
 		// $this->call('ProfilesTableSeeder');
 		// $this->command->info('Profiles table seeded!');
 		
-		$this->call('RolesTableSeeder');
-		$this->command->info('Roles table seeded!');
+		// $this->call('RolesTableSeeder');
+		// $this->command->info('Roles table seeded!');
+		
+		$this->call('VigueraTableSeeder');
+		$this->command->info('Viguera table seeded!');
 		
 
 
